@@ -470,7 +470,8 @@
     .projects-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 1px;
+      grid-template-rows: 4fr 7fr 4fr;
+      gap: 1px;      
       background: var(--border);
       border: 1px solid var(--border);
     }
@@ -503,7 +504,9 @@
 
     .project-img-placeholder {
       width: 100%;
-      aspect-ratio: 16/9;
+      height: 90%;
+      max-height: 350px;
+      /*aspect-ratio: 16/9;*/
       background: var(--surface);
       border: 1px solid var(--border-bright);
       display: flex;
@@ -531,6 +534,7 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
+      object-position: top;
     }
     .img-label {
       position: relative;
@@ -936,8 +940,7 @@
         <!-- LemiPay — FEATURED -->
         <div class="project-card featured reveal">
           <div class="project-img-placeholder">
-            <!-- ADD YOUR IMAGE: <img src="images/lemipay.png" alt="LemiPay Screenshot" /> -->
-            <span class="img-label">Add image → images/lemipay.png</span>
+             <img src="images/lemipay.png" alt="LemiPay Screenshot" /> 
           </div>
           <div class="project-info">
             <div class="status-dot">Live / In Development</div>
@@ -959,7 +962,7 @@
               <span class="tech-tag">Blockchain</span>
             </div>
             <div class="project-links">
-              <a href="https://github.com/MateoDi9z" target="_blank" class="btn btn-ghost btn-sm">GitHub ↗</a>
+              <a href="https://github.com/LemiPay" target="_blank" class="btn btn-ghost btn-sm">GitHub ↗</a>
             </div>
           </div>
         </div>

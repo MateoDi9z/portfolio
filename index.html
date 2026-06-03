@@ -527,6 +527,7 @@
         linear-gradient(var(--border) 1px, transparent 1px),
         linear-gradient(90deg, var(--border) 1px, transparent 1px);
       background-size: 20px 20px;
+      pointer-events: none;
     }
     .project-img-placeholder img {
       position: absolute;
@@ -767,6 +768,109 @@
       .cv-block::after { display: none; }
       footer { flex-direction: column; gap: 16px; text-align: center; }
     }
+
+    .project-gallery {
+      position: relative;
+      width: 100%;
+      height: 350px;
+      overflow: hidden;
+      border: 1px solid var(--border-bright);
+      background: var(--surface);
+    }
+    
+    .project-gallery img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top;
+      display: none;
+      cursor: pointer;
+      z-index: 1;
+    }
+    
+    .project-gallery img.active {
+      display: block;
+    }
+    
+    .gallery-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 36px;
+      height: 36px;
+      border: 1px solid var(--border-bright);
+      background: rgba(0,0,0,0.6);
+      color: white;
+      cursor: pointer;
+      z-index: 10;
+      transition: 0.2s;
+    }
+    
+    .gallery-btn:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+    
+    .gallery-prev {
+      left: 12px;
+    }
+    
+    .gallery-next {
+      right: 12px;
+    }
+    
+    .gallery-dots {
+      position: absolute;
+      bottom: 12px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      z-index: 100;
+      gap: 6px;
+    }
+    
+    .gallery-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.3);
+    }
+    
+    .gallery-dot.active {
+      background: var(--accent);
+    }
+    
+    /* LIGHTBOX */
+    
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.95);
+      z-index: 1000;
+      display: none;
+      justify-content: center;
+      align-items: center;
+      padding: 40px;
+    }
+    
+    .lightbox.open {
+      display: flex;
+    }
+    
+    .lightbox img {
+      max-width: 95vw;
+      max-height: 95vh;
+      object-fit: contain;
+    }
+    
+    .lightbox-close {
+      position: absolute;
+      top: 24px;
+      right: 24px;
+      font-size: 32px;
+      color: white;
+      cursor: pointer;
+    }
   </style>
 </head>
 <body>
@@ -940,7 +1044,26 @@
         <!-- LemiPay — FEATURED -->
         <div class="project-card featured reveal">
           <div class="project-img-placeholder">
-             <img src="images/lemipay.png" alt="LemiPay Screenshot" /> 
+              <div class="project-gallery">
+              
+                <img class="active"
+                     src="images/lemipay-1.png"
+                     alt="Dashboard">
+              
+                <img
+                     src="images/lemipay-2.png"
+                     alt="Funding group">
+              
+                <img
+                     src="images/lemipay-3.png"
+                     alt="Group overview">
+              
+                <button class="gallery-btn gallery-prev">‹</button>
+                <button class="gallery-btn gallery-next">›</button>
+              
+                <div class="gallery-dots"></div>
+              
+              </div>
           </div>
           <div class="project-info">
             <div class="status-dot">Live / In Development</div>
@@ -971,7 +1094,7 @@
         <div class="project-card reveal">
           <div class="project-img-placeholder" style="margin-bottom: 24px;">
             <!-- ADD YOUR IMAGE: <img src="images/movieweb.png" alt="MovieWeb Screenshot" /> -->
-            <span class="img-label">Add image → images/movieweb.png</span>
+            <span class="img-label">Coming soon...</span>
           </div>
           <div class="project-number"><span>02</span> — 2025</div>
           <div class="project-name">MovieWeb</div>
@@ -987,7 +1110,7 @@
             <span class="tech-tag">MongoDB</span>
           </div>
           <div class="project-links">
-            <a href="https://github.com/MateoDi9z" target="_blank" class="btn btn-ghost btn-sm">GitHub ↗</a>
+            <a href="https://github.com/MateoDi9z/MovieWebProject" target="_blank" class="btn btn-ghost btn-sm">GitHub ↗</a>
           </div>
         </div>
 
@@ -995,7 +1118,7 @@
         <div class="project-card reveal" style="transition-delay: 0.1s;">
           <div class="project-img-placeholder" style="margin-bottom: 24px;">
             <!-- ADD YOUR IMAGE: <img src="images/coexist.png" alt="Coexist Screenshot" /> -->
-            <span class="img-label">Add image → images/coexist.png</span>
+            <span class="img-label">Coming soon...</span>
           </div>
           <div class="project-number"><span>03</span> — 2022–2023</div>
           <div class="project-name">Coexist</div>
@@ -1040,7 +1163,7 @@
             </div>
             <div class="project-img-placeholder">
               <!-- ADD YOUR IMAGE: <img src="images/equadris.png" alt="Equadris Screenshot" /> -->
-              <span class="img-label">Add image → images/equadris.png</span>
+              <span class="img-label">Coming soon...</span>
             </div>
           </div>
         </div>
@@ -1140,6 +1263,11 @@
     </div>
   </footer>
 
+  <div class="lightbox" id="lightbox">
+    <span class="lightbox-close">&times;</span>
+    <img id="lightboxImage" src="" alt="">
+  </div>
+
   <script>
     // Custom cursor
     const cursor = document.getElementById('cursor');
@@ -1191,6 +1319,73 @@
     const nav = document.querySelector('nav');
     window.addEventListener('scroll', () => {
       nav.style.borderBottomColor = window.scrollY > 40 ? 'var(--border-bright)' : 'var(--border)';
+    });
+
+    document.querySelectorAll('.project-gallery').forEach(gallery => {
+    
+      const images = gallery.querySelectorAll('img');
+      const prev = gallery.querySelector('.gallery-prev');
+      const next = gallery.querySelector('.gallery-next');
+      const dotsContainer = gallery.querySelector('.gallery-dots');
+    
+      let current = 0;
+    
+      function render() {
+        images.forEach((img, i) => {
+          img.classList.toggle('active', i === current);
+        });
+    
+        dotsContainer.querySelectorAll('.gallery-dot').forEach((dot, i) => {
+          dot.classList.toggle('active', i === current);
+        });
+      }
+    
+      images.forEach((_, i) => {
+        const dot = document.createElement('div');
+        dot.className = 'gallery-dot';
+        dot.addEventListener('click', () => {
+          current = i;
+          render();
+        });
+        dotsContainer.appendChild(dot);
+      });
+    
+      prev.addEventListener('click', () => {
+        current = (current - 1 + images.length) % images.length;
+        render();
+      });
+    
+      next.addEventListener('click', () => {
+        current = (current + 1) % images.length;
+        render();
+      });
+    
+      images.forEach(img => {
+        img.addEventListener('click', () => {
+          document.getElementById('lightboxImage').src = img.src;
+          document.getElementById('lightbox').classList.add('open');
+        });
+      });
+    
+      render();
+    });
+    
+    document.querySelector('.lightbox-close')
+      .addEventListener('click', () => {
+        document.getElementById('lightbox').classList.remove('open');
+      });
+    
+    document.getElementById('lightbox')
+      .addEventListener('click', e => {
+        if (e.target.id === 'lightbox') {
+          e.currentTarget.classList.remove('open');
+        }
+      });
+    
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') {
+        document.getElementById('lightbox').classList.remove('open');
+      }
     });
   </script>
 </body>

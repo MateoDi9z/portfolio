@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mateo J. Diaz - Software Engineer</title>
+    <style>
+        /* BASE STYLES - Web View */
+        :root {
+            --text-color: #1f2937;
+            --link-color: #2563eb;
+            --bg-color: #f9fafb;
+            --paper-color: #ffffff;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            line-height: 1.4;
+            margin: 0;
+            padding: 40px 20px;
+            font-size: 13.5px; /* Optimized to fit one page */
+        }
+
+        .resume-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: var(--paper-color);
+            padding: 40px 50px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        /* HEADER */
+        header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        h1 {
+            font-size: 26px;
+            margin: 0 0 6px 0;
+            font-weight: 700;
+        }
+
+        .contact-info {
+            font-size: 13px;
+        }
+
+        .contact-info a {
+            color: var(--link-color);
+            text-decoration: none;
+            margin: 0 4px;
+        }
+
+        .contact-info a:hover {
+            text-decoration: underline;
+        }
+
+        /* SECTIONS */
+        section {
+            margin-bottom: 16px;
+        }
+
+        h2 {
+            font-size: 15px;
+            text-transform: uppercase;
+            border-bottom: 1px solid #000;
+            padding-bottom: 2px;
+            margin: 0 0 10px 0;
+            letter-spacing: 0.5px;
+        }
+
+        /* FLEX CONTAINERS FOR ITEMS */
+        .item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 2px;
+        }
+
+        .item-title {
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .item-subtitle {
+            font-style: italic;
+            font-size: 13px;
+        }
+
+        .item-date {
+            font-size: 13px;
+            white-space: nowrap;
+        }
+
+        /* LISTS */
+        ul {
+            margin: 0 0 10px 0;
+            padding-left: 18px;
+        }
+
+        li {
+            margin-bottom: 3px;
+            font-size: 13px;
+        }
+
+        .tech-stack {
+            font-style: italic;
+            font-size: 12.5px;
+            margin-bottom: 4px;
+            display: block;
+        }
+
+        /* SKILLS GRID */
+        .skills-container {
+            display: grid;
+            grid-template-columns: 140px 1fr;
+            row-gap: 4px;
+            font-size: 13px;
+        }
+
+        .skill-category {
+            font-weight: 600;
+        }
+
+        /* PRINT STYLES - PDF Generation */
+        @media print {
+            @page {
+                size: A4;
+                margin: 0.4in;
+            }
+
+            body {
+                background: white;
+                padding: 0;
+                font-size: 10pt; 
+            }
+
+            .resume-container {
+                box-shadow: none;
+                padding: 0;
+                max-width: 100%;
+            }
+
+            .contact-info a {
+                color: #000;
+                text-decoration: none;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="resume-container">
+    
+    <!-- HEADER -->
+    <header>
+        <h1>Mateo J. Diaz</h1>
+        <div class="contact-info">
+            Buenos Aires, Argentina | 
+            <a href="mailto:contact@mateodiaz.tech">contact@mateodiaz.tech</a> | 
+            <a href="https://www.linkedin.com/in/mateojdiaz/" target="_blank">LinkedIn</a> | 
+            <a href="https://github.com/MateoDi9z" target="_blank">GitHub</a> 
+            <!--| <a href="https://mateodiaz.tech" target="_blank">Portfolio</a>-->
+        </div>
+    </header>
+
+    <!-- EDUCATION -->
+    <section>
+        <h2>Education</h2>
+        
+        <div>
+            <div class="item-header">
+                <span class="item-title">Universidad Austral</span>
+                <span class="item-date">2024 - Present</span>
+            </div>
+            <div class="item-header">
+                <span class="item-subtitle">Bachelor of Science in Software Engineering (3rd Year)</span>
+            </div>
+            <ul>
+                <li><strong>Highlights:</strong> Currently completing advanced 4th-year coursework in "Decentralized Application Development on Ethereum".</li>
+                <li><strong>Coursework:</strong> Systems Design, Data Structures & Algorithms, Databases, Web Development.</li>
+            </ul>
+        </div>
+
+        <div>
+            <div class="item-header">
+                <span class="item-title">Escuela Técnica Roberto Rocca</span>
+                <span class="item-date">2017 - 2023</span>
+            </div>
+            <div class="item-header">
+                <span class="item-subtitle">Electronics Technician</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- EXPERIENCE -->
+    <section>
+        <h2>Experience</h2>
+
+        <!-- Aerospace Team -->
+        <div>
+            <div class="item-header">
+                <span class="item-title">Austral Aerospace Team | Hardware & Software Engineer</span>
+                <span class="item-date">Current</span>
+            </div>
+            <ul>
+                <li>Designing and routing the printed circuit board (PCB) using KiCad for a rocket competing in the ACEMA competition.</li>
+                <li>Developing mission-critical flight and control software, integrating telemetry sensors and electronics.</li>
+            </ul>
+        </div>
+
+        <!-- Tenaris Internship -->
+        <div>
+            <div class="item-header">
+                <span class="item-title">Tenaris | IT Intern (Systems Department)</span>
+                <span class="item-date">2023</span>
+            </div>
+            <ul>
+                <li>Completed a rigorous 200-hour professional internship within the Systems and IT department at the Campana facility.</li>
+                <li>Gained hands-on experience in corporate operations, troubleshooting, and enterprise IT workflows.</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- PROJECTS -->
+    <section>
+        <h2>Projects</h2>
+
+        <!-- LemiPay -->
+        <div>
+            <div class="item-header">
+                <span class="item-title">LemiPay | Fullstack Web3 Developer</span>
+                <span class="item-date">Current</span>
+            </div>
+            <span class="tech-stack">SvelteKit, Rust (Axum, Diesel), PostgreSQL, Web3, Blockchain</span>
+            <ul>
+                <li>Architecting a Web3 platform to manage shared expenses, enabling automated fund handling and debt resolution.</li>
+                <li>Developing a highly performant backend using Rust and Axum, integrated with a secure PostgreSQL database.</li>
+            </ul>
+        </div>
+
+        <!-- MovieWeb -->
+        <div>
+            <div class="item-header">
+                <span class="item-title">MovieWeb | Frontend & Database Engineer</span>
+                <span class="item-date">2025</span>
+            </div>
+            <span class="tech-stack">Astro, Express, PostgreSQL, MongoDB</span>
+            <ul>
+                <li>Built a responsive movie and casting discovery platform utilizing Astro for optimized, static-first frontend rendering.</li>
+                <li>Implemented a polyglot persistence architecture, effectively combining relational and NoSQL databases.</li>
+            </ul>
+        </div>
+
+        <!-- Coexist -->
+        <div>
+            <div class="item-header">
+                <span class="item-title">Coexist | Fullstack Developer</span>
+                <span class="item-date">2022 - 2023</span>
+            </div>
+            <span class="tech-stack">Nuxt.js, Express, TypeScript, PostgreSQL</span>
+            <ul>
+                <li>Engineered a centralized booking system resolving critical scheduling conflicts for common areas within public institutions.</li>
+                <li>Designed a responsive UI with Nuxt.js and built a scalable RESTful API with Express and TypeScript.</li>
+            </ul>
+        </div>
+
+        <!-- Equadris -->
+        <div>
+            <div class="item-header">
+                <span class="item-title">Equadris | Fullstack Developer</span>
+                <span class="item-date">2021 - 2022</span>
+            </div>
+            <span class="tech-stack">Vue.js, PHP, MySQL, WebSockets, Redis</span>
+            <ul>
+                <li>Developed a competitive e-sports platform allowing users to organize tournaments and compete for prizes.</li>
+                <li>Integrated WebSockets and Redis caching to support real-time live chat and low-latency tournament updates.</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- TECHNICAL SKILLS -->
+    <section>
+        <h2>Technical Skills</h2>
+        <div class="skills-container">
+            <span class="skill-category">Languages:</span>
+            <span>TypeScript, JavaScript, Java, Python, SQL, HTML/CSS, Rust, C++, C, .NET/C#.</span>
+            
+            <span class="skill-category">Frameworks:</span>
+            <span>Vue.js, SvelteKit, Next.js/Nuxt.js, React, Astro, Express, Django, Tailwind CSS, Sass.</span>
+            
+            <span class="skill-category">Databases:</span>
+            <span>PostgreSQL, SQLite, MongoDB, MySQL, Redis.</span>
+            
+            <span class="skill-category">Tools & Infra:</span>
+            <span>Docker, Git, Linux, AWS, Firebase, CI/CD, Testing Frameworks.</span>
+
+            <span class="skill-category">Management & Agile:</span>
+            <span>Agile Methodologies, Jira, GitHub Projects.</span>
+
+            <span class="skill-category">Blockchain & Web3:</span>
+            <span>Ethereum (Solidity), Stellar (Soroban), ScaffoldETH, Hardhat & Foundry</span>
+            
+            <span class="skill-category">Hardware:</span>
+            <span>PCB Design (KiCad), Arduino, ESP-IDF</span>
+        </div>
+    </section>
+
+    <!-- CERTIFICATIONS -->
+    <section>
+        <h2>Certifications</h2>
+        <ul>
+            <li><strong>JavaScript (Intermediate) Certificate</strong> - HackerRank (LinkedIn Verified)</li>
+            <li><strong>Foundational C# with Microsoft</strong> - freeCodeCamp (LinkedIn Verified)</li>
+            <li><strong>CCNA: Introduction to Networks</strong> - Cisco (LinkedIn Verified)</li>
+        </ul>
+    </section>
+
+</div>
+
+</body>
+</html>

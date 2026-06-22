@@ -283,6 +283,7 @@
       background: currentColor;
       opacity: 0;
       transition: opacity 0.2s;
+      pointer-events: none;
     }
     .btn:hover::before { opacity: 0.08; }
     .btn-primary {
@@ -470,8 +471,8 @@
     .projects-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      grid-template-rows: 4fr 7fr 4fr;
-      gap: 1px;      
+      grid-auto-rows: auto;
+      gap: 1px;
       background: var(--border);
       border: 1px solid var(--border);
     }
@@ -480,8 +481,11 @@
       background: var(--bg);
       padding: 40px;
       position: relative;
-      overflow: hidden;
+      overflow: visible;
       transition: background 0.3s;
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
     }
     .project-card::after {
       content: '';
@@ -490,6 +494,11 @@
       background: linear-gradient(135deg, var(--accent-dim) 0%, transparent 60%);
       opacity: 0;
       transition: opacity 0.3s;
+      pointer-events: none;
+    }
+    .project-card > * {
+      position: relative;
+      z-index: 1;
     }
     .project-card:hover { background: var(--bg2); }
     .project-card:hover::after { opacity: 1; }
@@ -502,9 +511,20 @@
       align-items: start;
     }
 
+    .project-card.featured .project-img-placeholder {
+      height: auto;
+      max-height: none;
+    }
+
+    .project-info {
+      position: relative;
+      z-index: 1;
+    }
+
     .project-img-placeholder {
       width: 100%;
-      height: 90%;
+      height: 200px;
+      flex-shrink: 0;
       max-height: 350px;
       /*aspect-ratio: 16/9;*/
       background: var(--surface);
@@ -536,6 +556,34 @@
       height: 100%;
       object-fit: cover;
       object-position: top;
+    }
+
+    .project-img-placeholder.project-embed {
+      height: auto;
+      max-height: none;
+      padding: 0;
+      overflow: hidden;
+    }
+
+    .project-img-placeholder.project-embed::before {
+      display: none;
+    }
+
+    .project-embed-viewport {
+      width: 100%;
+      overflow: hidden;
+      position: relative;
+      background: #0a0a0f;
+    }
+
+    .project-img-placeholder.project-embed iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      border: 0;
+      transform-origin: top left;
+      background: #0a0a0f;
+      pointer-events: none;
     }
     .img-label {
       position: relative;
@@ -594,7 +642,13 @@
       color: var(--muted);
     }
 
-    .project-links { display: flex; gap: 12px; }
+    .project-links {
+      display: flex;
+      gap: 12px;
+      position: relative;
+      z-index: 2;
+      margin-top: auto;
+    }
 
     /* STATUS DOT */
     .status-dot {
@@ -759,7 +813,7 @@
       .section-inner { padding: 80px 24px; }
       #hero { padding: 100px 24px 60px; }
       .about-grid { grid-template-columns: 1fr; gap: 40px; }
-      .projects-grid { grid-template-columns: 1fr; }
+      .projects-grid { grid-template-columns: 1fr; grid-auto-rows: auto; }
       .project-card.featured { grid-column: auto; display: block; }
       .project-card.featured .project-info { margin-top: 24px; }
       .exp-item { grid-template-columns: 1fr; gap: 8px; }
@@ -771,6 +825,7 @@
 
     .project-gallery {
       position: relative;
+      z-index: 2;
       width: 100%;
       height: 350px;
       overflow: hidden;
@@ -802,7 +857,8 @@
       background: rgba(0,0,0,0.6);
       color: white;
       cursor: pointer;
-      z-index: 10;
+      z-index: 20;
+      pointer-events: auto;
       transition: 0.2s;
     }
     
@@ -834,6 +890,8 @@
       height: 8px;
       border-radius: 50%;
       background: rgba(255,255,255,0.3);
+      cursor: pointer;
+      pointer-events: auto;
     }
     
     .gallery-dot.active {
@@ -1058,8 +1116,8 @@
                      src="images/lemipay-3.png"
                      alt="Group overview">
               
-                <button class="gallery-btn gallery-prev">‹</button>
-                <button class="gallery-btn gallery-next">›</button>
+                <button type="button" class="gallery-btn gallery-prev" aria-label="Previous image">‹</button>
+                <button type="button" class="gallery-btn gallery-next" aria-label="Next image">›</button>
               
                 <div class="gallery-dots"></div>
               
@@ -1069,11 +1127,11 @@
             <div class="status-dot">Live / In Development</div>
             <div class="project-number"><span>01</span> — Featured</div>
             <div class="project-name">LemiPay</div>
-            <div class="project-role">Fullstack Web3 Developer</div>
+            <div class="project-role">Laboratorio 1 — Course Project</div>
             <p class="project-desc">
-              A Web3 platform to manage shared expenses — automated fund handling and on-chain
-              debt resolution. High-performance backend in Rust (Axum + Diesel), SvelteKit frontend,
-              secure PostgreSQL integration. Built on blockchain infrastructure.
+              Course project for Laboratorio 1. A Web3 platform to manage shared expenses — automated
+              fund handling and on-chain debt resolution. High-performance backend in Rust (Axum + Diesel),
+              SvelteKit frontend, secure PostgreSQL integration. Built on blockchain infrastructure.
             </p>
             <div class="project-tech">
               <span class="tech-tag">SvelteKit</span>
@@ -1090,35 +1148,45 @@
           </div>
         </div>
 
-        <!-- MovieWeb -->
+        <!-- Crystal Lens -->
         <div class="project-card reveal">
-          <div class="project-img-placeholder" style="margin-bottom: 24px;">
-            <!-- ADD YOUR IMAGE: <img src="images/movieweb.png" alt="MovieWeb Screenshot" /> -->
-            <span class="img-label">Coming soon...</span>
+          <div class="project-img-placeholder project-embed" style="margin-bottom: 24px;">
+            <div class="project-embed-viewport">
+              <iframe
+                src="https://crystal-lens-accountability-protocol.vercel.app/"
+                title="Crystal Lens live preview"
+                loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade"
+              ></iframe>
+            </div>
           </div>
-          <div class="project-number"><span>02</span> — 2025</div>
-          <div class="project-name">MovieWeb</div>
-          <div class="project-role">Frontend & Database Engineer</div>
+          <div class="status-dot">Live</div>
+          <div class="project-number"><span>02</span> — 2026</div>
+          <div class="project-name">Crystal Lens</div>
+          <div class="project-role">Desarrollo de dApps en Ethereum — Course Project</div>
           <p class="project-desc">
-            Responsive movie and casting discovery platform. Static-first rendering with Astro,
-            polyglot persistence combining PostgreSQL and MongoDB — relational + NoSQL under one roof.
+            Course project for Desarrollo de dApps en Ethereum. Infrastructure for accountable
+            organizations (CLAP) — a transparent backbone for managing members, contributions,
+            proposals, and funds. Three integrated modules (Membership, Treasury, Governance)
+            enforce verified identities, contribution-based voting, and automated treasury
+            releases with permanent auditability.
           </p>
           <div class="project-tech">
-            <span class="tech-tag">Astro</span>
-            <span class="tech-tag">Express</span>
-            <span class="tech-tag">PostgreSQL</span>
-            <span class="tech-tag">MongoDB</span>
+            <span class="tech-tag">Next.js</span>
+            <span class="tech-tag">Reown</span>
+            <span class="tech-tag">Ethereum</span>
+            <span class="tech-tag">Web3</span>
           </div>
           <div class="project-links">
-            <a href="https://github.com/MateoDi9z/MovieWebProject" target="_blank" class="btn btn-ghost btn-sm">GitHub ↗</a>
+            <a href="https://crystal-lens-accountability-protocol.vercel.app/" target="_blank" class="btn btn-ghost btn-sm">Live ↗</a>
           </div>
         </div>
 
         <!-- Coexist -->
         <div class="project-card reveal" style="transition-delay: 0.1s;">
           <div class="project-img-placeholder" style="margin-bottom: 24px;">
-            <!-- ADD YOUR IMAGE: <img src="images/coexist.png" alt="Coexist Screenshot" /> -->
-            <span class="img-label">Coming soon...</span>
+             ADD YOUR IMAGE: <img src="images/coexist.jpeg" alt="Coexist Screenshot" /> 
+            <!--<span class="img-label">Coming soon...</span>-->
           </div>
           <div class="project-number"><span>03</span> — 2022–2023</div>
           <div class="project-name">Coexist</div>
@@ -1138,33 +1206,54 @@
           </div>
         </div>
 
+        <!-- MovieWeb -->
+        <div class="project-card reveal" style="transition-delay: 0.1s;">
+          <div class="project-img-placeholder" style="margin-bottom: 24px;">
+             <img src="images/movieweb.png" alt="MovieWeb Screenshot" /> 
+            <!--<span class="img-label">Coming soon...</span>-->
+          </div>
+          <div class="project-number"><span>04</span> — 2025</div>
+          <div class="project-name">MovieWeb</div>
+          <div class="project-role">Bases de Datos — Course Project</div>
+          <p class="project-desc">
+            Course project for Bases de Datos. Responsive movie and casting discovery platform.
+            Static-first rendering with Astro, polyglot persistence combining PostgreSQL and MongoDB
+            — relational + NoSQL under one roof.
+          </p>
+          <div class="project-tech">
+            <span class="tech-tag">Astro</span>
+            <span class="tech-tag">Express</span>
+            <span class="tech-tag">PostgreSQL</span>
+            <span class="tech-tag">MongoDB</span>
+          </div>
+          <div class="project-links">
+            <a href="https://github.com/MateoDi9z/MovieWebProject" target="_blank" class="btn btn-ghost btn-sm">GitHub ↗</a>
+          </div>
+        </div>
+
         <!-- Equadris -->
-        <div class="project-card reveal" style="transition-delay: 0.2s; grid-column: 1 / -1;">
-          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: start;">
-            <div>
-              <div class="project-number"><span>04</span> — 2021–2022</div>
-              <div class="project-name">Equadris</div>
-              <div class="project-role">Fullstack Developer</div>
-              <p class="project-desc">
-                Competitive e-sports platform for tournament organization and prize competition.
-                Real-time live chat and low-latency tournament updates via WebSockets + Redis caching.
-                Vue.js frontend, PHP backend, MySQL data layer.
-              </p>
-              <div class="project-tech">
-                <span class="tech-tag">Vue.js</span>
-                <span class="tech-tag">PHP</span>
-                <span class="tech-tag">MySQL</span>
-                <span class="tech-tag">WebSockets</span>
-                <span class="tech-tag">Redis</span>
-              </div>
-              <div class="project-links">
-                <a href="https://github.com/MateoDi9z" target="_blank" class="btn btn-ghost btn-sm">GitHub ↗</a>
-              </div>
-            </div>
-            <div class="project-img-placeholder">
-              <!-- ADD YOUR IMAGE: <img src="images/equadris.png" alt="Equadris Screenshot" /> -->
-              <span class="img-label">Coming soon...</span>
-            </div>
+        <div class="project-card reveal" style="transition-delay: 0.2s;">
+          <div class="project-img-placeholder" style="margin-bottom: 24px;">
+            <!-- ADD YOUR IMAGE: <img src="images/equadris.png" alt="Equadris Screenshot" /> -->
+            <span class="img-label">Coming soon...</span>
+          </div>
+          <div class="project-number"><span>05</span> — 2021–2022</div>
+          <div class="project-name">Equadris</div>
+          <div class="project-role">Fullstack Developer</div>
+          <p class="project-desc">
+            Competitive e-sports platform for tournament organization and prize competition.
+            Real-time live chat and low-latency tournament updates via WebSockets + Redis caching.
+            Vue.js frontend, PHP backend, MySQL data layer.
+          </p>
+          <div class="project-tech">
+            <span class="tech-tag">Vue.js</span>
+            <span class="tech-tag">PHP</span>
+            <span class="tech-tag">MySQL</span>
+            <span class="tech-tag">WebSockets</span>
+            <span class="tech-tag">Redis</span>
+          </div>
+          <div class="project-links">
+            <a href="https://github.com/MateoDi9z" target="_blank" class="btn btn-ghost btn-sm">GitHub ↗</a>
           </div>
         </div>
 
@@ -1320,6 +1409,25 @@
     window.addEventListener('scroll', () => {
       nav.style.borderBottomColor = window.scrollY > 40 ? 'var(--border-bright)' : 'var(--border)';
     });
+
+    function resizeProjectEmbeds() {
+      const baseWidth = 1440;
+      const baseHeight = 960;
+
+      document.querySelectorAll('.project-embed-viewport').forEach(viewport => {
+        const iframe = viewport.querySelector('iframe');
+        if (!iframe) return;
+
+        const scale = viewport.clientWidth / baseWidth;
+        iframe.style.width = `${baseWidth}px`;
+        iframe.style.height = `${baseHeight}px`;
+        iframe.style.transform = `scale(${scale})`;
+        viewport.style.height = `${baseHeight * scale}px`;
+      });
+    }
+
+    resizeProjectEmbeds();
+    window.addEventListener('resize', resizeProjectEmbeds);
 
     document.querySelectorAll('.project-gallery').forEach(gallery => {
     
